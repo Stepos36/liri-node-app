@@ -1,6 +1,7 @@
 require("dotenv").config();
 var axios = require("axios");
 var keys = require("./keys.js");
+var colors = require('colors');
 var moment = require('moment');
 var Spotify = require('node-spotify-api')
 var spotify = new Spotify(keys.spotify);
@@ -11,8 +12,9 @@ if (command==="concert-this") {
         function(response) {
             var output = []
             for (i=0; i<response.data.length;i++)
-                output[i] = ('========================='+'\n'+'Venue name: '+response.data[i].venue.name+'\n'+'At: '+response.data[i].venue.city+', '+
-                response.data[i].venue.region+', '+response.data[i].venue.country+'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')+'\n'+'========================='
+                output[i] = ('========================='.rainbow+'\n'+'Venue name: '+response.data[i].venue.name+'\n'+'At: '+response.data[i].venue.city+', '+
+                response.data[i].venue.region+', '+response.data[i].venue.country+'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
+                +'\n'+'========================='.rainbow
                 +'\n'+'\n');
                 console.log(output.toString().replace(/\n,/g, '\n').replace(/ ,/g, ''));
             }
@@ -33,15 +35,23 @@ if (command==="spotify-this-song") {
             for (j=0;j<data.tracks.items[i].album.artists.length;j++){
                 artists.push(data.tracks.items[i].album.artists[j].name)
             }
-      console.log('============================='+'\n'+
+      console.log('============================='.rainbow+'\n'+
       'Artist(s): '+artists+'\n'+'Song: '+data.tracks.items[i].name+'\n'+'Preview link: '+data.tracks.items[i].preview_url+'\n'+
       'Album: '+data.tracks.items[i].album.name+'\n'+'Released: '+data.tracks.items[i].album.release_date+'\n'+'Duration: '+duration_min+':'+duration_sec
-      +'\n'+'============================='+'\n'); 
+      +'\n'+'============================='.rainbow+'\n'); 
          }  
     });
 }
 if (command==="movie-this") {
-    
+    axios.get('http://www.omdbapi.com/?t=+'+request+'&apikey=trilogy').then(
+  function(response) {
+    console.log('==================================='.rainbow+'\n'+'Title'.underline.white+': '+response.data.Title.yellow+'\n'+'Year of release'.underline.white+': '
+    +response.data.Year.cyan+'\n'+'IMDB rating'.underline.white+': '+response.data.Ratings[0].Value.green+'\n'+'RottenTomatoes rating'.underline.white+': '
+    +response.data.Ratings[1].Value.red+'\n'+'Country'.underline.white+': '+response.data.Country.yellow+'\n'+'Language'.underline.white+': '
+    +response.data.Language.cyan+'\n'+'Plot'.underline.white+': '+response.data.Plot.grey+'\n'+'Actors'.underline.white+': '
+    +response.data.Actors.cyan+'\n'+'==================================='.rainbow+'\n');
+    }
+    )
 }
 if (command==="do-what-it-says") {
     
