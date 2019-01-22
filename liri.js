@@ -19,6 +19,7 @@ if (command==="concert-this") {
     )
 }
 if (command==="spotify-this-song") {
+    if(request={}){request='The Sign Ace of Base'}
     spotify.search({ type: 'track', query: request }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
