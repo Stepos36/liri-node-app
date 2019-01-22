@@ -25,12 +25,16 @@ if (command==="spotify-this-song") {
         }
         for(i=0;i<data.tracks.items.length;i++){
             var artists = []
+            var duration_ms = parseInt(data.tracks.items[i].duration_ms);
+            var duration_min=Math.floor((duration_ms/1000/60)<<0)
+            var duration_sec=Math.floor((duration_ms/1000)%60)
+            if(duration_sec<10){duration_sec = '0'+duration_sec.toString()}
             for (j=0;j<data.tracks.items[i].album.artists.length;j++){
                 artists.push(data.tracks.items[i].album.artists[j].name)
             }
       console.log('============================='+'\n'+
       'Artist(s): '+artists+'\n'+'Song: '+data.tracks.items[i].name+'\n'+'Preview link: '+data.tracks.items[i].preview_url+'\n'+
-      'Album: '+data.tracks.items[i].album.name
+      'Album: '+data.tracks.items[i].album.name+'\n'+'Released: '+data.tracks.items[i].album.release_date+'\n'+'Duration: '+duration_min+':'+duration_sec
       +'\n'+'============================='+'\n'); 
          }  
     });
