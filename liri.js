@@ -2,6 +2,8 @@ require("dotenv").config();
 var axios = require("axios");
 var keys = require("./keys.js");
 var moment = require('moment');
+var Spotify = require('node-spotify-api')
+var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 var request = process.argv[3]
 if (command==="concert-this") {
@@ -17,7 +19,21 @@ if (command==="concert-this") {
     )
 }
 if (command==="spotify-this-song") {
-    
+    spotify.search({ type: 'track', query: request }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+        for(i=0;i<data.tracks.items.length;i++){
+            var artists = []
+            for (j=0;j<data.tracks.items[i].album.artists.length;j++){
+                artists.push(data.tracks.items[i].album.artists[j].name)
+            }
+      console.log('============================='+'\n'+
+      'Artist(s): '+artists+'\n'+'Song: '+data.tracks.items[i].name+'\n'+'Preview link: '+data.tracks.items[i].preview_url+'\n'+
+      'Album: '+data.tracks.items[i].album.name
+      +'\n'+'============================='+'\n'); 
+         }  
+    });
 }
 if (command==="movie-this") {
     
