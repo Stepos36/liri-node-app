@@ -8,29 +8,35 @@ var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 var request = process.argv[3];
+var thisMoment = moment().format('MMMM Do YYYY, h:mm:ss a')
 var runProgram = function(command, request) {
+    fs.appendFile("log.txt",'\n'+'====================================================================================='
+    +'\n'+thisMoment+'/:: '+'User: '+command+' '+request
+    +'\n'+'====================================================================================='
+    +"\n", function(err) {if(err) throw err;});
 if (command==="concert-this") {
     axios.get("https://rest.bandsintown.com/artists/" + request + "/events?app_id=codingbootcamp").then(
         function(response) {
-            var output = [];
-                if((response.data.length===18)||(response.data.length===0)){console.log('No results were found for this search')}
+            var output
+                if((response.data.length===18)||(response.data.length===0)){console.log('No results were found for this search')
+                fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'No results were found for this search' +"\n", function(err) {if(err) throw err;});}
                 else{
                     for (i=0; i<response.data.length;i++) {
                         if(response.data[i].venue.region){
-                            output[i] = ('========================='.rainbow
+                            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
+                            console.log('========================='.rainbow
                             +'\n'+'Venue name: '+response.data[i].venue.name.yellow
                             +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.region.cyan+', '+response.data[i].venue.country.cyan
                             +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
                             +'\n'+'========================='.rainbow+'\n'+'\n');
-                            console.log(output[i].toString());
                             }
                         else if(response.data[i].venue.region===''){
-                            output[i] = ('========================='.rainbow
+                            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
+                            console.log('========================='.rainbow
                             +'\n'+'Venue name: '+response.data[i].venue.name.yellow
                             +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.country.cyan
                             +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
                             +'\n'+'========================='.rainbow+'\n'+'\n');
-                            console.log(output[i].toString());
                             }
                     }
                 }
@@ -39,12 +45,14 @@ if (command==="concert-this") {
 }
 if (command=="spotify-this-song") {
     if((request)||(request!==undefined)){}
-    else{request='Ace of Base the sign'}
+    else{request='Ace of Base the sign'
+    fs.appendFile("log.txt", 'Empty request was sent' +"\n", function(err) {if(err) throw err;});}
     spotify.search({ type: 'track', query: request }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
         for(i=0;i<data.tracks.items.length;i++){
+            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
             var artists = []
             var duration_ms = parseInt(data.tracks.items[i].duration_ms);
             var duration_min=Math.floor((duration_ms/1000/60)<<0)
@@ -62,20 +70,24 @@ if (command=="spotify-this-song") {
         +'\n'+'Duration: '+duration_min+':'+duration_sec
         +'\n'+'============================='.rainbow+'\n'); 
            }
-        if(data.tracks.items.length<1){console.log('No results were found for this search')}
+        if(data.tracks.items.length<1){console.log('No results were found for this search')
+        fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'No results were found for this search' +"\n", function(err) {if(err) throw err;});}
     });
 }
 if (command==="movie-this") {
     if((request)||(request!==undefined)){}
-    else{request='Mr Nobody'}
+    else{request='Mr Nobody'
+    fs.appendFile("log.txt", 'Empty request was sent' +"\n", function(err) {if(err) throw err;});}
     axios.get('http://www.omdbapi.com/?t=+'+request+'&apikey=trilogy').then(
   function(response, error) {
     if (error) {
         return console.log('Error occurred: '+error);
       }
-    if(response.data.Response==='False'){console.log('No results were found for this search')}
+    if(response.data.Response==='False'){console.log('No results were found for this search')
+    fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'No results were found for this search' +"\n", function(err) {if(err) throw err;});}
     else{
         if(response.data.Ratings[1]){
+            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
             console.log('==================================='.rainbow
             +'\n'+'Title: '+response.data.Title.yellow
             +'\n'+'Year of release: '+response.data.Year.cyan
@@ -87,11 +99,23 @@ if (command==="movie-this") {
             +'\n'+'Actors: '+response.data.Actors.cyan
             +'\n'+'==================================='.rainbow+'\n');
             }
-        else{
+        else if(response.data.Ratings[0]){
+            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
             console.log('==================================='.rainbow
             +'\n'+'Title: '+response.data.Title.yellow
             +'\n'+'Year of release: '+response.data.Year.cyan
             +'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green
+            +'\n'+'Country: '+response.data.Country.yellow
+            +'\n'+'Language: '+response.data.Language.cyan
+            +'\n'+'Plot: '+response.data.Plot.grey
+            +'\n'+'Actors: '+response.data.Actors.cyan
+            +'\n'+'==================================='.rainbow+'\n');
+            }
+        else{
+            fs.appendFile("log.txt",'\n'+thisMoment+'/:: '+'Server: '+'Response sent back succesfully' +"\n", function(err) {if(err) throw err;});
+            console.log('==================================='.rainbow
+            +'\n'+'Title: '+response.data.Title.yellow
+            +'\n'+'Year of release: '+response.data.Year.cyan
             +'\n'+'Country: '+response.data.Country.yellow
             +'\n'+'Language: '+response.data.Language.cyan
             +'\n'+'Plot: '+response.data.Plot.grey
