@@ -13,25 +13,26 @@ if (command==="concert-this") {
     axios.get("https://rest.bandsintown.com/artists/" + request + "/events?app_id=codingbootcamp").then(
         function(response) {
             var output = [];
-                for (i=0; i<response.data.length;i++) {
-                    if(response.data[i].venue.region){
-                        output[i] = ('========================='.rainbow
-                        +'\n'+'Venue name: '+response.data[i].venue.name.yellow
-                        +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.region.cyan+', '+response.data[i].venue.country.cyan
-                        +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
-                        +'\n'+'========================='.rainbow
-                        +'\n'+'\n');
-                        console.log(output[i].toString());
-                        }
-                    else if(response.data[i].venue.region===''){
-                        output[i] = ('========================='.rainbow
-                        +'\n'+'Venue name: '+response.data[i].venue.name.yellow
-                        +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.country.cyan
-                        +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
-                        +'\n'+'========================='.rainbow
-                        +'\n'+'\n');
-                        console.log(output[i].toString());
-                        }
+                if((response.data.length===18)||(response.data.length===0)){console.log('No results were found for this search')}
+                else{
+                    for (i=0; i<response.data.length;i++) {
+                        if(response.data[i].venue.region){
+                            output[i] = ('========================='.rainbow
+                            +'\n'+'Venue name: '+response.data[i].venue.name.yellow
+                            +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.region.cyan+', '+response.data[i].venue.country.cyan
+                            +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
+                            +'\n'+'========================='.rainbow+'\n'+'\n');
+                            console.log(output[i].toString());
+                            }
+                        else if(response.data[i].venue.region===''){
+                            output[i] = ('========================='.rainbow
+                            +'\n'+'Venue name: '+response.data[i].venue.name.yellow
+                            +'\n'+'At: '+response.data[i].venue.city.cyan+', '+response.data[i].venue.country.cyan
+                            +'\n'+moment(response.data[i].datetime).format('MM-DD-YYYY')
+                            +'\n'+'========================='.rainbow+'\n'+'\n');
+                            console.log(output[i].toString());
+                            }
+                    }
                 }
         }
     )
@@ -71,11 +72,16 @@ if (command==="movie-this") {
     if (error) {
         return console.log('Error occurred: '+error);
       }
-    console.log('==================================='.rainbow+'\n'+'Title: '+response.data.Title.yellow+'\n'+'Year of release: '
-    +response.data.Year.cyan+'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green+'\n'+'RottenTomatoes rating: '
-    +response.data.Ratings[1].Value.red+'\n'+'Country: '+response.data.Country.yellow+'\n'+'Language: '
-    +response.data.Language.cyan+'\n'+'Plot: '+response.data.Plot.grey+'\n'+'Actors: '
-    +response.data.Actors.cyan+'\n'+'==================================='.rainbow+'\n');
+    console.log('==================================='.rainbow
+    +'\n'+'Title: '+response.data.Title.yellow
+    +'\n'+'Year of release: '+response.data.Year.cyan
+    +'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green
+    +'\n'+'RottenTomatoes rating: '+response.data.Ratings[1].Value.red
+    +'\n'+'Country: '+response.data.Country.yellow
+    +'\n'+'Language: '+response.data.Language.cyan
+    +'\n'+'Plot: '+response.data.Plot.grey
+    +'\n'+'Actors: '+response.data.Actors.cyan
+    +'\n'+'==================================='.rainbow+'\n');
     }
     )
 }
