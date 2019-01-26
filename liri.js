@@ -53,16 +53,16 @@ if (command=="spotify-this-song") {
             for (j=0;j<data.tracks.items[i].album.artists.length;j++){
                 artists.push(data.tracks.items[i].album.artists[j].name)
             }
-      console.log('============================='.rainbow
-      +'\n'+'Artist(s): '+artists
-      +'\n'+'Song: '+data.tracks.items[i].name.yellow
-      +'\n'+'Preview link: '+data.tracks.items[i].preview_url
-      +'\n'+'Album: '+data.tracks.items[i].album.name.cyan
-      +'\n'+'Released: '+data.tracks.items[i].album.release_date.yellow
-      +'\n'+'Duration: '+duration_min+':'+duration_sec
-      +'\n'+'============================='.rainbow+'\n'); 
-         }
-         if(data.tracks.items.length<1){console.log('No results were found for this search')}
+        console.log('============================='.rainbow
+        +'\n'+'Artist(s): '+artists
+        +'\n'+'Song: '+data.tracks.items[i].name.yellow
+        +'\n'+'Preview link: '+data.tracks.items[i].preview_url
+        +'\n'+'Album: '+data.tracks.items[i].album.name.cyan
+        +'\n'+'Released: '+data.tracks.items[i].album.release_date.yellow
+        +'\n'+'Duration: '+duration_min+':'+duration_sec
+        +'\n'+'============================='.rainbow+'\n'); 
+           }
+        if(data.tracks.items.length<1){console.log('No results were found for this search')}
     });
 }
 if (command==="movie-this") {
@@ -73,16 +73,32 @@ if (command==="movie-this") {
     if (error) {
         return console.log('Error occurred: '+error);
       }
-    console.log('==================================='.rainbow
-    +'\n'+'Title: '+response.data.Title.yellow
-    +'\n'+'Year of release: '+response.data.Year.cyan
-    +'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green
-    +'\n'+'RottenTomatoes rating: '+response.data.Ratings[1].Value.red
-    +'\n'+'Country: '+response.data.Country.yellow
-    +'\n'+'Language: '+response.data.Language.cyan
-    +'\n'+'Plot: '+response.data.Plot.grey
-    +'\n'+'Actors: '+response.data.Actors.cyan
-    +'\n'+'==================================='.rainbow+'\n');
+    if(response.data.Response==='False'){console.log('No results were found for this search')}
+    else{
+        if(response.data.Ratings[1]){
+            console.log('==================================='.rainbow
+            +'\n'+'Title: '+response.data.Title.yellow
+            +'\n'+'Year of release: '+response.data.Year.cyan
+            +'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green
+            +'\n'+'RottenTomatoes rating: '+response.data.Ratings[1].Value.red
+            +'\n'+'Country: '+response.data.Country.yellow
+            +'\n'+'Language: '+response.data.Language.cyan
+            +'\n'+'Plot: '+response.data.Plot.grey
+            +'\n'+'Actors: '+response.data.Actors.cyan
+            +'\n'+'==================================='.rainbow+'\n');
+            }
+        else{
+            console.log('==================================='.rainbow
+            +'\n'+'Title: '+response.data.Title.yellow
+            +'\n'+'Year of release: '+response.data.Year.cyan
+            +'\n'+'IMDB rating: '+response.data.Ratings[0].Value.green
+            +'\n'+'Country: '+response.data.Country.yellow
+            +'\n'+'Language: '+response.data.Language.cyan
+            +'\n'+'Plot: '+response.data.Plot.grey
+            +'\n'+'Actors: '+response.data.Actors.cyan
+            +'\n'+'==================================='.rainbow+'\n');
+            }
+        }
     }
     )
 }
