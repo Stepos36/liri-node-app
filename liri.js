@@ -56,12 +56,13 @@ if (command=="spotify-this-song") {
       console.log('============================='.rainbow
       +'\n'+'Artist(s): '+artists
       +'\n'+'Song: '+data.tracks.items[i].name.yellow
-      +'\n'+'Preview link: '+data.tracks.items[i].preview_url.grey
+      +'\n'+'Preview link: '+data.tracks.items[i].preview_url
       +'\n'+'Album: '+data.tracks.items[i].album.name.cyan
       +'\n'+'Released: '+data.tracks.items[i].album.release_date.yellow
       +'\n'+'Duration: '+duration_min+':'+duration_sec
       +'\n'+'============================='.rainbow+'\n'); 
-         }  
+         }
+         if(data.tracks.items.length<1){console.log('No results were found for this search')}
     });
 }
 if (command==="movie-this") {
