@@ -28,3 +28,7 @@ _Note: Program handles all types of known errors, including empty response, miss
 
 _Note: All user and server activity is logged in log.txt file_
 ![log](assets/images/log.png)
+
+Application in use
+![use](assets/images/readme.gif)
+![logs](assets/images/log.gif)
