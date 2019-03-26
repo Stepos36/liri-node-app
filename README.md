@@ -2,6 +2,13 @@
 ### LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a _Language_ Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
 #### _Note: LIRI requests must follow the format: node liri.js (command) (request). Please enclose the request in quotation marks ""_ if it contains more than one word
 
+##### To start this app on your machine:
+* Pull this repo
+* In your bash type: 'npm install -y'
+* Your Liri-node-app is ready to use, just type in: 'node liri.js' + /one of the commands below ↓/
+
+### Commands
+
 * **Spotify Song Information:**  
 Using the command "spotify-this-song", users will access Artist, Title, Release date, Duration time and Album Title information; along with a URL to a song preview if available for 20 songs matching users query.
 ![Spotify](assets/images/spotify-this-song.png)
@@ -32,3 +39,14 @@ _Note: All user and server activity is logged in log.txt file_
 Application in use
 ![use](assets/images/readme.gif)
 ![logs](assets/images/log.gif)
+
+_This CLI application was created using following technologies:_
+* **Node**
+* **JavaScript**
+* **API POST/GET methods**
+* **Following NPM packages:**
+    * "axios"
+    * "colors"
+    * "dotenv"
+    * "moment"
+    * "node-spotify-api"
