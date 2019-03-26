@@ -50,3 +50,6 @@ _This CLI application was created using following technologies:_
     * "dotenv"
     * "moment"
     * "node-spotify-api"
+
+    
+![footer](assets/images/footer.png)
